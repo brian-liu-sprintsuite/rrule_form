@@ -8,6 +8,7 @@ module RruleForm
 
     initializer "rrule_form.action_view_helpers" do
       ActiveSupport.on_load(:action_view) do
+        require_dependency "rrule_form/application_helper"
         include RruleForm::ApplicationHelper
       end
     end
