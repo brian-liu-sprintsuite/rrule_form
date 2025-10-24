@@ -3,13 +3,15 @@ require "rrule_form/version"
 module RruleForm
   class Error < StandardError; end
 
-  class Engine < ::Rails::Engine
-    isolate_namespace RruleForm
+  module Rails
+    class Engine < ::Rails::Engine
 
-    initializer "rrule_form.action_view_helpers" do
-      ActiveSupport.on_load(:action_view) do
-        require_dependency "rrule_form/application_helper"
-        include RruleForm::ApplicationHelper
+      isolate_namespace RruleForm
+      initializer 'local_helper.action_controller' do
+        ActiveSupport.on_load :action_controller do
+          require_dependency "rrule_form/application_helper"
+          helper RruleForm::ApplicationHelper
+        end
       end
     end
   end
