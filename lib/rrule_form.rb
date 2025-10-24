@@ -6,8 +6,10 @@ module RruleForm
   class Engine < ::Rails::Engine
     isolate_namespace RruleForm
 
-    ActiveSupport.on_load(:action_controller_base) do
-      helper RruleForm::ApplicationHelper
+    initializer "rrule_form.action_view_helpers" do
+      ActiveSupport.on_load(:action_view) do
+        include RruleForm::ApplicationHelper
+      end
     end
   end
 end
